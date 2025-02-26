@@ -6,5 +6,6 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 3000,
-  }
+  },
+  base: '/',  // Make sure this is correct for deployment
 });
