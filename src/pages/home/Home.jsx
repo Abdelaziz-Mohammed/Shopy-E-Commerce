@@ -1,7 +1,13 @@
 
+import Hero from './Hero';
+import Gifts from './Gifts';
+
 function Home() {
   return (
-    <h1>Home</h1>
+    <>
+      <Hero />
+      <Gifts />
+    </>
   )
 }
 

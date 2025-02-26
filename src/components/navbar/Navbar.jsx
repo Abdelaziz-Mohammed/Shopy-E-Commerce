@@ -1,21 +1,13 @@
 
-import { Link } from "react-router-dom";
+import TopNav from "./topnav/TopNav";
+import BottomNav from "./bottomnav/BottomNav";
 
 function Navbar() {
-  const navLinks = ['home', 'cart'];
   return (
-    <>
-      <div>Navbar</div>
-      <ul>
-        {
-          navLinks.map((link, index) => (
-            <li key={index}>
-              <Link to={`/${link}`}>{link}</Link>
-            </li>
-          ))
-        }
-      </ul>
-    </>
+    <section className="flex flex-col items-center gap-5 py-5 fixed top-0 w-full bg-white shadow-md shadow-neutral-400">
+      <TopNav/>
+      <BottomNav/>
+    </section>
   )
 }
 

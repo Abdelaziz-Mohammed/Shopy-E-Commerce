@@ -2,12 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* create a layer like this */
-/* @layer components {
+/* create your layers here */
+@layer components {
     .section-title {
-        @apply text-lg sm:text-2xl font-semibold text-center text-black capitalize pb-6;
+        @apply text-2xl sm:text-3xl tracking-wide font-bold text-center text-black uppercase pt-6 pb-12;
+        font-family: 'Poppins', serif;
     }
-} */
+}
 
 /* "Poppins" font for body */
 body {
