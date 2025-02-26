@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* create a layer like this */
+/* @layer components {
+    .section-title {
+        @apply text-lg sm:text-2xl font-semibold text-center text-black capitalize pb-6;
+    }
+} */
+
+/* "Poppins" font for body */
+body {
+    font-family: "Poppins", serif;
+}
+
+/* "Montserrat" font for headings */
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Montserrat", serif;
+}
+
+/* custom scroll bar */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #f97316;
+    background-color: #ff9b49;
+    border-radius: 2px;
+}
