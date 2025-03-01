@@ -65,7 +65,7 @@ npm run dev
 ### 4️⃣ Open Your Browser and Navigate to `http://localhost:3000`
 
 ## 🌍 Deployment
-The project is deployed using ... . You can access it [here](https://).
+The project is deployed using vercel. You can access it [here](https://shopy-e-commerce-one.vercel.app/).
 
 ## 👨‍💻 Author
 **Eng. Abdelaziz Mohamed**
