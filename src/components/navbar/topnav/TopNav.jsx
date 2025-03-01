@@ -19,7 +19,7 @@ function TopNav() {
             <FaSearch className='text-neutral-400' />
           </div>
           {/* sign in */}
-          <Link to='/'
+          <Link to='/signin'
             className='text-base text-black text-normal'>
             Sign in
           </Link>

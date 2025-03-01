@@ -7,7 +7,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        yellowText: '#D4AF37',
+        yellowText: '#d4af37',
+        yellowForForms: '#C59B2D',
       }
     },
   },

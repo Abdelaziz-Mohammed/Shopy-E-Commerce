@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 function ProductsProvider({ children }) {
   // manage products state
   const [products, setProducts] = useState([
-    // put intial products here
+    // put initial products here
   ]);
   // load products from local storage on mount
   useEffect(() => {

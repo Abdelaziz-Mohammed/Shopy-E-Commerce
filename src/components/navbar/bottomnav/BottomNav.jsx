@@ -11,7 +11,7 @@ function BottomNav() {
             links.map((link, index) =>
               <li key={index}>
                 <Link to='/'
-                  className="text-base text-black font-normal">
+                  className="text-xs sm:text-sm md:text-base text-black font-normal">
                   {link}
                 </Link>
               </li>

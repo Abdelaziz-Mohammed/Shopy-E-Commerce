@@ -15,7 +15,7 @@ function Footer() {
   ]
   return (
     <section className="bg-black">
-      <div className="container mx-auto px-6 pt-16 pb-6">
+      <div className="container mx-auto px-6 pt-12 pb-6">
         {/* top footer */}
         <div className="text-white flex flex-col sm:flex-row gap-y-10">
           <div className="flex flex-col gap-5">
@@ -31,7 +31,7 @@ function Footer() {
             {
               lists.map((list, index) =>
                 <div key={index}>
-                  <h3 className="">{list.heading}</h3>
+                  <h3 className="mb-2">{list.heading}</h3>
                   <ul>
                     {
                       list.lis.map((item, index) =>

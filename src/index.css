@@ -30,7 +30,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #f97316;
-    background-color: #ff9b49;
+    background-color: #eab308 ;
     border-radius: 2px;
 }
+
+/* prevent the default eye icon (toggle visibility button) in password inputs */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+
+
