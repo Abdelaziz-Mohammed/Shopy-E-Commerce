@@ -21,7 +21,7 @@ function Hero() {
             Celebrate, cherish, and create lasting memories with Gift Day.
           </p>
           <button
-            className="flex items-center justify-center h-[40px] px-5 rounded-3xl bg-transparent border border-white text-white text-base capitalize font-medium w-fit">
+            className="flex items-center justify-center h-[40px] px-5 rounded-3xl bg-transparent hover:bg-black ease-linear duration-200 border border-white hover:border-black text-white text-base capitalize font-medium w-fit">
             Shop Now
           </button>
         </div>

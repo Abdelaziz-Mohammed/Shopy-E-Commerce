@@ -1,0 +1,30 @@
+.products-swiper .swiper-wrapper {
+    margin-bottom: 10px !important;
+}
+.products-swiper .swiper-wrapper {
+    display: flex !important;
+    justify-content: flex-start !important;
+}
+.products-swiper .swiper-slide {
+    display: flex !important;
+    justify-content: center !important;
+}
+.products-swiper .swiper-button-prev {
+    display: none !important;
+}
+.products-swiper .swiper-button-next {
+    width: 35px !important;
+    height: 35px !important;
+    border-radius: 50% !important;
+    background-color: #fff !important;
+    right: 0 !important;
+    background-image: url('./next-arrow.svg');
+    background-size: contain !important;
+}
+.products-swiper .swiper-button-next:hover {
+    transform: scale(105%) !important;
+    transition: all linear 2000ms;
+}
+.products-swiper .swiper-button-next::after {
+    display: none !important;
+}

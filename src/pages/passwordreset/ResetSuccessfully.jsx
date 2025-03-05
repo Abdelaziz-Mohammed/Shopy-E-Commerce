@@ -17,7 +17,7 @@ function ResetSuccessfully() {
             Continue
           </Link>
           <Link to='/signin'
-            className='flex items-center justify-center gap-1 text-neutral-500 hover:text-yellowForForms ease-linear duration-200'>
+            className='flex items-center justify-center gap-1 text-neutral-500 hover:text-yellowPrimary ease-linear duration-200'>
             <FaLongArrowAltLeft className='text-xs' />
             <span className='text-sm'>Back to login</span>
           </Link>

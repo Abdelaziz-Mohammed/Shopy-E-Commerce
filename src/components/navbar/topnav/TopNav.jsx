@@ -13,18 +13,17 @@ function TopNav() {
             <img src="logo.svg" alt="Shopy" />
           </Link>
           {/* search box */}
-          <div className='flex-1 flex items-center justify-center gap-1 border border-neutral-300 focus-within:border-neutral-500 ease-linear duration-100 px-2 rounded-3xl'>
+          <div className='hidden flex-1 sm:flex items-center justify-center gap-1 border border-neutral-300 focus-within:border-neutral-500 ease-linear duration-100 px-2 rounded-3xl'>
             <input type="text" placeholder='Search for any thing'
               className='flex-1 pl-3 py-1 text-black text-base rounded-3xl outline-none placeholder:text-neutral-400 placeholder:text-base' />
             <FaSearch className='text-neutral-400' />
           </div>
-          {/* sign in */}
-          <Link to='/signin'
-            className='text-base text-black text-normal'>
-            Sign in
-          </Link>
-          {/* notification + favorites + cart */}
+          {/* signin + notification + favorites + cart */}
           <div className='flex items-center justify-center gap-3 text-xl'>
+            <Link to='/signin'
+              className='text-base text-black font-medium'>
+              Sign in
+            </Link>
             <FaRegBell className='cursor-pointer' />
             <FaRegHeart className='cursor-pointer' />
             <FiShoppingCart className='cursor-pointer' />

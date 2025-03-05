@@ -5,10 +5,15 @@
 /* create your layers here */
 @layer components {
     .section-title {
-        @apply text-2xl sm:text-3xl tracking-wide font-bold text-center text-black uppercase pt-6 pb-12;
+        @apply tracking-wide font-bold text-center text-black uppercase pt-6 pb-12;
         font-family: 'Poppins', serif;
+        font-size: clamp(1.2rem, 5vw, 1.875rem);
     }
 }
+/* back to these values if responsive-related issues appeared */
+/* text-2xl sm:text-3xl */
+
+/* ----- */
 
 /* "Poppins" font for body */
 body {
@@ -39,6 +44,3 @@ input[type="password"]::-ms-reveal,
 input[type="password"]::-ms-clear {
   display: none;
 }
-
-
-

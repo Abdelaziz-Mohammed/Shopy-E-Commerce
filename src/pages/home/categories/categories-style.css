@@ -1,0 +1,19 @@
+/* Swipper Custom Settings */
+.categories .swiper {
+    display: flex !important;
+    justify-content: flex-start !important;
+}
+@media (min-width: 1024px) {
+    .categories .swiper {
+        justify-content: center !important;
+    }
+}
+.categories .swiper-wrapper {
+    width: fit-content !important;
+    display: flex !important;
+    justify-content: center !important;
+}
+.categories .swiper-slide {
+    display: flex !important;
+    justify-content: center !important;
+}

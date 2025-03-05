@@ -1,11 +1,13 @@
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaLongArrowAltLeft } from 'react-icons/fa';
 import checkEmailImage from '../../assets/images/check-email.png';
 import { useRef, useState } from 'react';
 
 function CheckEmail() {
+  const navigate = useNavigate();
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
+  const [validOtp, setValidOtp] = useState(true);
   const inputRefs = useRef([]); // refs for otp inputs
   function handleOtpChange(index, e) {
     const value = e.target.value;
@@ -23,6 +25,13 @@ function CheckEmail() {
   function handleOtpKeyDown(index, e) {
     if (e.key === 'Backspace' && index > 0) {
         inputRefs.current[index - 1].focus(); // focus on the previous input
+    }
+  }
+  function validateOTP() {
+    const isOTPValid = otp.every((digit) => digit.length > 0);
+    setValidOtp(isOTPValid);
+    if (isOTPValid) {
+      navigate('/setnewpassword');
     }
   }
   return (
@@ -43,26 +52,28 @@ function CheckEmail() {
                   maxLength='1'
                   onChange={(e) => handleOtpChange(index, e)}
                   onKeyDown={(e) => handleOtpKeyDown(index, e)}
-                  className="w-10 sm:w-12 h-10 sm:h-12 border border-neutral-500 text-center text-xl rounded-md outline-none focus:border-yellowForForms ease-linear duration-200"
+                  className={`w-10 sm:w-12 h-10 sm:h-12 border border-neutral-500 text-center text-xl rounded-md outline-none focus:border-yellowPrimary ease-linear duration-200
+                    ${validOtp ? '' : (otp[index].length > 0) ? '' : 'border-red-500 bg-red-50'} `}
                 />
               )
             }
           </div>
           {/* - - - */}
-          <Link to='/setnewpassword'
+          <button
+            onClick={validateOTP}
             className='text-white bg-black w-full rounded-md h-[40px] flex items-center justify-center'>
             Verify
-          </Link>
+          </button>
           <div className='text-center flex items-center justify-center gap-1'>
             <p
               className='text-sm font-medium text-black'>Didn&apos;t recive the email?</p>
             <Link to='/checkemail'
-              className='text-sm text-yellowForForms font-medium'>
+              className='text-sm text-yellowPrimary font-medium'>
               Resend
             </Link>
           </div>
           <Link to='/signin'
-            className='flex items-center justify-center gap-1 text-neutral-500 hover:text-yellowForForms ease-linear duration-200'>
+            className='flex items-center justify-center gap-1 text-neutral-500 hover:text-yellowPrimary ease-linear duration-200'>
             <FaLongArrowAltLeft className='text-xs' />
             <span className='text-sm'>Back to login</span>
           </Link>

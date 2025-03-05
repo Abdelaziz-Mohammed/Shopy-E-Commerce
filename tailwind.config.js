@@ -8,7 +8,9 @@ export default {
     extend: {
       colors: {
         yellowText: '#d4af37',
-        yellowForForms: '#C59B2D',
+        yellowPrimary: '#C59B2D',
+        grayBg: '#F6F6F6',
+        black: '#292929',
       }
     },
   },
