@@ -42,7 +42,7 @@ function FlashSales() {
   }, [days, hours, minutes, seconds]);
   return (
     <section>
-      <div className="container mx-auto px-6 pt-6 pb-16">
+      <div className="container mx-auto px-6 pt-6 pb-12">
         <div className="flex flex-wrap items-center justify-start gap-10">
           {/* title */}
           <div className="flex flex-col gap-5 pb-6">

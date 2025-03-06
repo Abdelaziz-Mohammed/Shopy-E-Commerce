@@ -12,16 +12,51 @@ function Signin() {
   const [passwordInput, setPasswordInput] = useState("");
   const [validEmail, setValidEmail] = useState(true);
   const [validPassword, setValidPassword] = useState(true);
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   function validateInputs() {
-    const isEmailValid = (/^\S+@\S+\.\S+$/g).test(emailInput.trim());
-    const isPasswordValid = passwordInput.trim().length >= 8;
-    
+    const isEmailValid = emailInput.length > 0 && emailInput.length <= 100 && (/^\S+@\S+\.\S+$/g).test(emailInput.trim());
+    const isPasswordValid = passwordInput.length >= 8 && (/[A-Z]/).test(passwordInput) && (/[a-z]/).test(passwordInput) && (/\d/).test(passwordInput) && (/[@$!%*?&]/).test(passwordInput);
+    // set email error messages
+    if (emailInput.length === 0) {
+      setEmailError('Email is required');
+    }
+    else if (emailInput.length > 100) {
+      setEmailError('Email must not exceed 100 characters');
+    }
+    else if (!(/^\S+@\S+\.\S+$/g).test(emailInput.trim())) {
+      setEmailError('Invalid email format (example@gmail.com)');
+    }
+    else {
+      setEmailError('Valid Email');
+    }
+    // set password error messages
+    if (passwordInput.length === 0) {
+      setPasswordError('Password is required');
+    }
+    else if (passwordInput.length < 8) {
+      setPasswordError('Password must be at least 8 characters long');
+    }
+    else if (!(/[A-Z]/).test(passwordInput)) {
+      setPasswordError('Password must include at least one uppercase letter');
+    }
+    else if (!(/[a-z]/).test(passwordInput)) {
+      setPasswordError('Password must include at least one lowercase letter');
+    }
+    else if (!(/\d/).test(passwordInput)) {
+      setPasswordError('Password must include at least one number');
+    }
+    else if (!(/[@$!%*?&]/).test(passwordInput)) {
+      setPasswordError('Password must include at least one special character (@$!%*?&)');
+    }
+    else {
+      setPasswordError('Valid Password');
+    }
+    // set valid booleans
     setValidEmail(isEmailValid);
     setValidPassword(isPasswordValid);
-  
-    if (isEmailValid && isPasswordValid) {
-      navigate('/');
-    }
+    // navigate if every thing is OK
+    if (isEmailValid && isPasswordValid) navigate('/');
   }
   return (
     <section className="bg-white h-screen">
@@ -39,36 +74,48 @@ function Signin() {
             <span className='text-neutral-500 text-center font-semibold uppercase font-base px-1 bg-white 
               absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]'>OR</span>
           </div>
-          <div className={`flex items-center justify-center gap-1 pr-3 border border-neutral-300 relative ${!validEmail ? "border-red-500" : ""}
-            rounded-lg h-[50px] focus-within:border-black group  ease-linear duration-200`}>
-            <label htmlFor="email"
-              className={`absolute top-0 translate-y-[-50%] left-3 bg-white px-1 text-neutral-500 text-sm group-focus-within:text-black ease-linear duration-200
-                ${!validEmail ? "text-red-500" : ""}`}>
-              Email
-            </label>
-            <input type="email" name='email' id='email' placeholder='Enter Your Email'
-              value={emailInput} onChange={(e) => setEmailInput(e.target.value)}
-              className='outline-none h-full rounded-lg flex-1 pl-3 placeholder:text-sm'/>
-            <MdEmail className={`text-neutral-500 cursor-pointer text-xl group-focus-within:text-black ease-linear duration-200
-               ${!validEmail ? "text-red-500" : ""}`} />
+          {/* email field */}
+          <div>
+            <div className={`flex items-center justify-center gap-1 pr-3 border border-neutral-300 relative ${!validEmail ? "border-red-500" : ""}
+              rounded-lg h-[50px] focus-within:border-black group  ease-linear duration-200`}>
+              <label htmlFor="email"
+                className={`absolute top-0 translate-y-[-50%] left-3 bg-white px-1 text-neutral-500 text-sm group-focus-within:text-black ease-linear duration-200
+                  ${!validEmail ? "text-red-500" : ""}`}>
+                Email
+              </label>
+              <input type="email" name='email' id='email' placeholder='Enter Your Email'
+                value={emailInput} onChange={(e) => setEmailInput(e.target.value)}
+                className='outline-none h-full rounded-lg flex-1 pl-3 placeholder:text-sm'/>
+              <MdEmail className={`text-neutral-500 cursor-pointer text-xl group-focus-within:text-black ease-linear duration-200
+                ${!validEmail ? "text-red-500" : ""}`} />
+            </div>
+            <span className={`${emailError === '' ? 'hidden' : ''} text-xs pl-3 ${emailError === 'Valid Email' ? 'text-green-500' : 'text-red-500'}`}>
+              {emailError}
+            </span>
           </div>
-          <div className={`flex items-center justify-center gap-1 pr-3 border border-neutral-300 relative ${!validPassword ? "border-red-500" : ""}
-            rounded-lg h-[50px] focus-within:border-black group ease-linear duration-200`}>
-            <label htmlFor="password"
-              className={`absolute top-0 translate-y-[-50%] left-3 bg-white px-1 text-neutral-500 text-sm group-focus-within:text-black ease-linear duration-200
-                ${!validPassword ? "text-red-500" : ""}`}>
-              Password
-            </label>
-            <input type={showPassword ? "text" : "password"} name='password' id='password' placeholder='Enter Your Password'
-              value={passwordInput} onChange={(e) => setPasswordInput(e.target.value)}
-              className='outline-none h-full rounded-lg flex-1 pl-3 placeholder:text-sm appearance-none' />
-            {
-              showPassword ?
-              <IoMdEye onClick={() => setShowPassword(false)} className={`text-neutral-500 cursor-pointer text-2xl group-focus-within:text-black ease-linear duration-200
-                ${!validPassword ? "text-red-500" : ""}`} /> :
-              <IoMdEyeOff onClick={() => setShowPassword(true)}  className={`text-neutral-500 cursor-pointer text-2xl group-focus-within:text-black ease-linear duration-200
-                ${!validPassword ? "text-red-500" : ""}`} />
-            }
+          {/* password field */}
+          <div>
+            <div className={`flex items-center justify-center gap-1 pr-3 border border-neutral-300 relative ${!validPassword ? "border-red-500" : ""}
+              rounded-lg h-[50px] focus-within:border-black group ease-linear duration-200`}>
+              <label htmlFor="password"
+                className={`absolute top-0 translate-y-[-50%] left-3 bg-white px-1 text-neutral-500 text-sm group-focus-within:text-black ease-linear duration-200
+                  ${!validPassword ? "text-red-500" : ""}`}>
+                Password
+              </label>
+              <input type={showPassword ? "text" : "password"} name='password' id='password' placeholder='Enter Your Password'
+                value={passwordInput} onChange={(e) => setPasswordInput(e.target.value)}
+                className='outline-none h-full rounded-lg flex-1 pl-3 placeholder:text-sm appearance-none' />
+              {
+                showPassword ?
+                <IoMdEye onClick={() => setShowPassword(false)} className={`text-neutral-500 cursor-pointer text-2xl group-focus-within:text-black ease-linear duration-200
+                  ${!validPassword ? "text-red-500" : ""}`} /> :
+                <IoMdEyeOff onClick={() => setShowPassword(true)}  className={`text-neutral-500 cursor-pointer text-2xl group-focus-within:text-black ease-linear duration-200
+                  ${!validPassword ? "text-red-500" : ""}`} />
+              }
+            </div>
+            <span className={`${passwordError === '' ? 'hidden' : ''} text-xs pl-3 ${passwordError === 'Valid Password' ? 'text-green-500' : 'text-red-500'}`}>
+              {passwordError}
+            </span>
           </div>
           <div className='flex items-center justify-end'>
             {/* error msg */}

@@ -5,7 +5,7 @@ import ProductsSwiper from "../../../components/productswiper/ProductsSwiper"
 function Electronics() {
   return (
     <section className="bg-white">
-      <div className="container mx-auto pb-16">
+      <div className="container mx-auto pb-12">
         <SectionTitle title='Electronics' />
         <ProductsSwiper />
       </div>

@@ -9,11 +9,27 @@ function PasswordReset() {
   const navigate = useNavigate();
   const [emailInput, setEmailInput] = useState('');
   const [validEmail, setValidEmail] = useState(true);
+  const [emailError, setEmailError] = useState('');
   function validateEmail(e) {
     e.preventDefault();
-    const isValid = (/^\S+@\S+\.\S+$/).test(emailInput.trim());
-    setValidEmail(isValid);
-    if (isValid) navigate('/checkemail');
+    const isEmailValid = emailInput.length > 0 && emailInput.length <= 100 && (/^\S+@\S+\.\S+$/g).test(emailInput.trim());
+    // set email error messages
+    if (emailInput.length === 0) {
+      setEmailError('Email is required');
+    }
+    else if (emailInput.length > 100) {
+      setEmailError('Email must not exceed 100 characters');
+    }
+    else if (!(/^\S+@\S+\.\S+$/g).test(emailInput.trim())) {
+      setEmailError('Invalid email format (example@gmail.com)');
+    }
+    else {
+      setEmailError('Valid Email');
+    }
+    // set valid boolean
+    setValidEmail(isEmailValid);
+    // navigate if every thing is OK
+    if (isEmailValid) navigate('/checkemail');
   }
   return (
     <section className="bg-white h-screen">
@@ -26,19 +42,25 @@ function PasswordReset() {
           
           <form onSubmit={validateEmail}
             className='w-full flex flex-col gap-5'>
-            <div className={`flex items-center justify-center gap-1 w-full pr-3 border relative
-              ${validEmail ? 'border-neutral-300' : 'border-red-500'}
-              rounded-lg h-[50px] focus-within:border-black group ease-linear duration-200`}>
-              <label htmlFor="email"
-                className={`absolute top-0 translate-y-[-50%] left-3 bg-white px-1 text-neutral-500 text-sm ease-linear duration-200
-                  ${validEmail ? 'group-focus-within:text-black' : 'text-red-500'}`}>
-                Email
-              </label>
-              <input type="email" name='email' id='email' placeholder='example@gmail.com'
-                value={emailInput} onChange={(e) => setEmailInput(e.target.value)}
-                className='outline-none h-full rounded-lg flex-1 pl-3 placeholder:text-sm' />
-              <MdEmail className={`text-neutral-500 cursor-pointer text-xl ease-linear duration-200
-                ${validEmail ? 'group-focus-within:text-black' : 'text-red-500'}`} />
+              {/* email field */}
+            <div>
+              <div className={`flex items-center justify-center gap-1 w-full pr-3 border relative
+                ${validEmail ? 'border-neutral-300' : 'border-red-500'}
+                rounded-lg h-[50px] focus-within:border-black group ease-linear duration-200`}>
+                <label htmlFor="email"
+                  className={`absolute top-0 translate-y-[-50%] left-3 bg-white px-1 text-neutral-500 text-sm ease-linear duration-200
+                    ${validEmail ? 'group-focus-within:text-black' : 'text-red-500'}`}>
+                  Email
+                </label>
+                <input type="email" name='email' id='email' placeholder='example@gmail.com'
+                  value={emailInput} onChange={(e) => setEmailInput(e.target.value)}
+                  className='outline-none h-full rounded-lg flex-1 pl-3 placeholder:text-sm' />
+                <MdEmail className={`text-neutral-500 cursor-pointer text-xl ease-linear duration-200
+                  ${validEmail ? 'group-focus-within:text-black' : 'text-red-500'}`} />
+              </div>
+              <span className={`${emailError === '' ? 'hidden' : ''} text-xs pl-3 ${emailError === 'Valid Email' ? 'text-green-500' : 'text-red-500'}`}>
+                {emailError}
+              </span>
             </div>
             <button type='submit'
               className='text-white bg-black w-full rounded-md h-[40px] flex items-center justify-center'>

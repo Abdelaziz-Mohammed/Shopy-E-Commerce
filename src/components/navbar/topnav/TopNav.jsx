@@ -2,6 +2,8 @@
 import { Link } from 'react-router-dom';
 import { FaRegBell, FaRegHeart, FaSearch } from 'react-icons/fa';
 import { FiShoppingCart } from 'react-icons/fi';
+import { BsSearch } from 'react-icons/bs';
+import { IoSearch } from 'react-icons/io5';
 
 function TopNav() {
   return (
@@ -19,9 +21,9 @@ function TopNav() {
             <FaSearch className='text-neutral-400' />
           </div>
           {/* signin + notification + favorites + cart */}
-          <div className='flex items-center justify-center gap-3 text-xl'>
+          <div className='flex items-center justify-center gap-3 text-black text-xl'>
             <Link to='/signin'
-              className='text-base text-black font-medium'>
+              className='text-base font-medium'>
               Sign in
             </Link>
             <FaRegBell className='cursor-pointer' />

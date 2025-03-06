@@ -9,10 +9,11 @@ function CheckEmail() {
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [validOtp, setValidOtp] = useState(true);
   const inputRefs = useRef([]); // refs for otp inputs
+
   function handleOtpChange(index, e) {
     const value = e.target.value;
-    // allow only numbers
-    if (!(parseInt(value) >= 0 && parseInt(value) <= 9)) return;
+    // allow only numbers (0-9)
+    if (!(/^\d$/).test(value)) return;
     // now, set opt
     const newOtp = [...otp];
     newOtp[index] = value;
@@ -22,17 +23,29 @@ function CheckEmail() {
       inputRefs.current[index + 1].focus(); // focus on the next input
     }
   }
+
   function handleOtpKeyDown(index, e) {
-    if (e.key === 'Backspace' && index > 0) {
+    if (e.key === 'Backspace') {
+      const newOtp = [...otp];
+      newOtp[index] = ''; // clear the current input
+      setOtp(newOtp);
+
+      if (index > 0) {
         inputRefs.current[index - 1].focus(); // focus on the previous input
+      }
+    }
+    else if (e.key === 'ArrowRight' && index < otp.length - 1) {
+      inputRefs.current[index + 1].focus(); // focus on the next input
+    }
+    else if (e.key === 'ArrowLeft' && index > 0) {
+      inputRefs.current[index - 1].focus(); // focus on the previous input
     }
   }
+
   function validateOTP() {
     const isOTPValid = otp.every((digit) => digit.length > 0);
     setValidOtp(isOTPValid);
-    if (isOTPValid) {
-      navigate('/setnewpassword');
-    }
+    if (isOTPValid) navigate('/setnewpassword');
   }
   return (
     <section className="bg-white h-screen">
@@ -42,11 +55,13 @@ function CheckEmail() {
             className='w-[125px] h-[125px] mb-6' />
           <h3 className='text-black font-bold text-xl sm:text-2xl'>Check your email</h3>
           <p className='text-neutral-500 text-center text-base capitalize max-w-[300px]'>We sent a code to your email.</p>
-          {/* OTP */}
+          {/* OTP Input Boxes */}
           <div className='flex items-center justify-center gap-3'>
             {
               otp.map((digit, index) =>
-                <input key={index} ref={(ele) => (inputRefs.current[index] = ele)}
+                <input 
+                  key={index}
+                  ref={(ele) => (inputRefs.current[index] = ele)}
                   type="text"
                   value={digit}
                   maxLength='1'
@@ -68,6 +83,7 @@ function CheckEmail() {
             <p
               className='text-sm font-medium text-black'>Didn&apos;t recive the email?</p>
             <Link to='/checkemail'
+              onClick={() => {setOtp(['', '', '', '', '', '']); setValidOtp(true);}}
               className='text-sm text-yellowPrimary font-medium'>
               Resend
             </Link>

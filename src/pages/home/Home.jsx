@@ -15,16 +15,17 @@ function Home() {
     <>
       <Hero />
       <Categories />
+      {/* Search-Related Sections */}
       <FlashSales />
       <RecommendedProducts />
       <BrowsedProducts />
+      {/* Offers */}
       <Offers />
-      {/* Home&Kitchen section */}
+      {/* Categories Sections */}
       <HomeAndKitchen />
-      {/* Fashion section */}
       <Fashion />
-      {/* Electronics section */}
       <Electronics />
+      {/* Custmor Support */}
       <CustomerSupport />
     </>
   )
