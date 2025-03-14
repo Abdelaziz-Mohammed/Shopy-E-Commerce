@@ -19,7 +19,7 @@ function ScrollToTop() {
       {
         isVisible && (
           <button onClick={handleScroll}
-            className='w-10 h-10 flex items-center justify-center rounded-full text-white bg-orange-500 shadow-lg hover:bg-orange-600 ease-linear duration-200'>
+            className='w-10 h-10 flex items-center justify-center rounded-full text-white bg-yellow-600 shadow-lg hover:bg-yellow-700/75 ease-linear duration-200'>
             <FaArrowUp />    
           </button>
         )

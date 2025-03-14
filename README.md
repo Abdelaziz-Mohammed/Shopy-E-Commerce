@@ -4,48 +4,119 @@
 This is a fully functional and responsive e-commerce web application built using React, React Router, and Tailwind CSS.
 
 ## 🚀 Features
--
--
--
+- 
+- 
+- 
 
 ## 🛠️ Technologies Used
 - **React.js**
 - **Tailwind CSS**
 - **React Router**
 - **React Icons**
+- **Swiper**
+- **react-select**
+- **bcryptjs**
 - **Vite**: for development and build optimization
 
 ## 📁 Project Structure
 ```
-|-- public
-|   |-- logo.svg
-|-- src
-|   |-- assets
-|   |   |-- images
-|   |-- productcontext
-|   |   |-- ProductContext.jsx
-|   |   |-- ProductProvider.jsx
-|   |-- components
-|   |   |-- navbar
-|   |   |   |-- Navbar.jsx
-|   |   |-- footer
-|   |   |   |-- Footer.jsx
-|   |   |-- scrolltotop
-|   |   |   |-- ScrollToTop.jsx
-|   |-- pages
-|   |   |-- home
-|   |   |   |-- Home.jsx
-|   |   |-- shoppingcart
-|   |   |   |-- ShoppingCart.jsx
-|   |   |-- signin
-|   |   |   |-- Signin.jsx
-|   |   |-- signup
-|   |   |   |-- Signup.jsx
-|   |-- main.jsx
-|   |-- App.jsx
-|   |-- index.css
-|-- index.html
-|-- README.md
+├─ public
+│   ├─ logo.svg
+├─ src
+│   ├─ App.jsx
+│   ├─ index.css
+│   ├─ main.jsx
+│   │
+│   ├─ assets
+│   │   ├─ images
+│   │   │   |
+│   │   │   ├─ categories
+│   │   │   ├─ payment
+│   │   │   ├─ payment-methods
+│   │   │   ├─ products
+│   │
+│   ├─ components
+│   │   ├─ footer
+│   │   │   ├─ Footer.jsx
+│   │   │
+│   │   ├─ navbar
+│   │   │   ├─ Navbar.jsx
+│   │   │   │
+│   │   │   ├─ bottomnav
+│   │   │   │   ├─ BottomNav.jsx
+│   │   │   │
+│   │   │   ├─ topnav
+│   │   │   │   ├─ TopNav.jsx
+│   │   │
+│   │   ├─ pathnavigation
+│   │   │   ├─ PathNav.jsx
+│   │   │
+│   │   ├─ productcard
+│   │   │   ├─ ProductCard.jsx
+│   │   │
+│   │   ├─ productswiper
+│   │   │   ├─ next-arrow.svg
+│   │   │   ├─ product-swiper-style.css
+│   │   │   ├─ ProductsSwiper.jsx
+│   │   │
+│   │   ├─ scrolltotop
+│   │   │   ├─ ScrollToTop.jsx
+│   │
+│   ├─ pages
+│   │   ├─ checkout
+│   │   │   ├─ CheckOut.jsx
+│   │   │   ├─ OrderSummary.jsx
+│   │   │
+│   │   ├─ home
+│   │   │   ├─ CustomerSupport.jsx
+│   │   │   ├─ Hero.jsx
+│   │   │   ├─ Home.jsx
+│   │   │   ├─ Offers.jsx
+│   │   │
+│   │   │   ├─ categories
+│   │   │   │   ├─ categories-style.css
+│   │   │   │   ├─ Categories.jsx
+│   │   │
+│   │   │   ├─ categoriesSections
+│   │   │   │   ├─ Beauty.jsx
+│   │   │   │   ├─ Electronics.jsx
+│   │   │   │   ├─ Fashion.jsx
+│   │   │   │   ├─ HomeAndKitchen.jsx
+│   │   │   │   ├─ Jewellery.jsx
+│   │   │   │   ├─ SectionTitle.jsx
+│   │   │   │   ├─ Sports.jsx
+│   │   │
+│   │   │   ├─ searchRelatedSections
+│   │   │   │   ├─ BrowsedProducts.jsx
+│   │   │   │   ├─ FlashSales.jsx
+│   │   │   │   ├─ RecommendedProducts.jsx
+│   │   |
+│   │   ├─ passwordreset
+│   │   │   ├─ CheckEmail.jsx
+│   │   │   ├─ PasswordReset.jsx
+│   │   │   ├─ ResetSuccessfully.jsx
+│   │   │   ├─ SetNewPassword.jsx
+│   │   |
+│   │   ├─ shoppingcart
+│   │   │   ├─ ProductInCart.jsx
+│   │   │   ├─ ShoppingCart.jsx
+│   │   |
+│   │   ├─ signin
+│   │   │   ├─ Signin.jsx
+│   │   |
+│   │   ├─ signup
+│   │   │   ├─ Signup.jsx
+│   │
+│   ├─ productscontext
+│   │   ├─ ProductsContext.jsx
+│   │   ├─ ProductsProvider.jsx
+│   │
+│   ├─ userscontext
+│   │   ├─ UsersContext.jsx
+│   │   ├─ UsersProvider.jsx
+│
+├─ index.html
+├─ README.md
 ```
 
 ## 🛒 How to Run the Project

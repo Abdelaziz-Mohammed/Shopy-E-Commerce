@@ -1,12 +1,16 @@
 
+import { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { UsersContext } from '../../userscontext/UsersContext';
+import { MdEmail } from 'react-icons/md';
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 import googleImg from '../../assets/images/google-logo.svg';
-import { MdEmail } from 'react-icons/md';
-import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import bcrypt from 'bcryptjs';
 
 function Signin() {
   const navigate = useNavigate();
+  // users context
+  const { users } = useContext(UsersContext);
   const [showPassword, setShowPassword] = useState(false);
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
@@ -14,18 +18,28 @@ function Signin() {
   const [validPassword, setValidPassword] = useState(true);
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const allowedDomains = ['gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com', 'icloud.com'];
   function validateInputs() {
+    let isValid = true;
     const isEmailValid = emailInput.length > 0 && emailInput.length <= 100 && (/^\S+@\S+\.\S+$/g).test(emailInput.trim());
     const isPasswordValid = passwordInput.length >= 8 && (/[A-Z]/).test(passwordInput) && (/[a-z]/).test(passwordInput) && (/\d/).test(passwordInput) && (/[@$!%*?&]/).test(passwordInput);
     // set email error messages
+    const emaildomail = emailInput.split('@')[1];
     if (emailInput.length === 0) {
       setEmailError('Email is required');
+      isValid = false;
     }
     else if (emailInput.length > 100) {
       setEmailError('Email must not exceed 100 characters');
+      isValid = false;
     }
     else if (!(/^\S+@\S+\.\S+$/g).test(emailInput.trim())) {
       setEmailError('Invalid email format (example@gmail.com)');
+      isValid = false;
+    }
+    else if (!allowedDomains.includes(emaildomail)) {
+      setEmailError(`Invalid domain name: ${emaildomail}`);
+      isValid = false;
     }
     else {
       setEmailError('Valid Email');
@@ -33,30 +47,27 @@ function Signin() {
     // set password error messages
     if (passwordInput.length === 0) {
       setPasswordError('Password is required');
-    }
-    else if (passwordInput.length < 8) {
-      setPasswordError('Password must be at least 8 characters long');
-    }
-    else if (!(/[A-Z]/).test(passwordInput)) {
-      setPasswordError('Password must include at least one uppercase letter');
-    }
-    else if (!(/[a-z]/).test(passwordInput)) {
-      setPasswordError('Password must include at least one lowercase letter');
-    }
-    else if (!(/\d/).test(passwordInput)) {
-      setPasswordError('Password must include at least one number');
-    }
-    else if (!(/[@$!%*?&]/).test(passwordInput)) {
-      setPasswordError('Password must include at least one special character (@$!%*?&)');
+      isValid = false;
     }
     else {
-      setPasswordError('Valid Password');
+      setPasswordError('');
     }
     // set valid booleans
     setValidEmail(isEmailValid);
     setValidPassword(isPasswordValid);
-    // navigate if every thing is OK
-    if (isEmailValid && isPasswordValid) navigate('/');
+    // search for this user in users context
+    if(isValid) {
+      const user = users.find(user => user.email === emailInput);
+      console.log(user);
+      console.log(users);
+      if (!user || !bcrypt.compareSync(passwordInput, user.password)) {
+        setEmailError("Invalid email or password");
+        setPasswordError("Invalid email or password");
+        return;
+      }
+      // navigate if every thing is OK
+      if (isEmailValid && isPasswordValid && user) navigate('/');
+    }
   }
   return (
     <section className="bg-white h-screen">
@@ -117,8 +128,11 @@ function Signin() {
               {passwordError}
             </span>
           </div>
-          <div className='flex items-center justify-end'>
-            {/* error msg */}
+          <div className='flex items-center justify-between'>
+            <div className='flex items-center justify-start gap-2'>
+              <input type="checkbox" id="remember-me" className='w-4 h-4 peer' />
+              <label htmlFor="remember-me" className='text-neutral-500 text-sm peer-checked:text-yellowPrimary ease-linear duration-100'>Remember Me</label>
+            </div>
             <Link to='/passwordreset' 
               className='text-xs text-yellowPrimary font-medium'>Forgot password?</Link>
           </div>

@@ -14,7 +14,7 @@ function CustomerSupport() {
           </div>
           <div className="flex flex-wrap items-center justify-start gap-10">
             <div className="flex items-center justify-center gap-3">
-              <div className="flex items-center justify-center w-8 h-8 border border-white rounded-full cursor-pointer">
+              <div className="flex items-center justify-center w-8 h-8 border border-white rounded-full cursor-pointer hover:bg-white transition">
                 <AiOutlineInfo className="text-black text-2xl font-extrabold" />
               </div>
               <div className="flex flex-col gap-0">
@@ -23,7 +23,7 @@ function CustomerSupport() {
               </div>
             </div>
             <div className="flex items-center justify-center gap-3">
-              <div className="flex items-center justify-center w-8 h-8 border border-white rounded-full cursor-pointer">
+              <div className="flex items-center justify-center w-8 h-8 border border-white rounded-full cursor-pointer hover:bg-white transition">
                 <BsEnvelope className="text-black text-lg font-extrabold" />
               </div>
               <div className="flex flex-col gap-0">
@@ -32,7 +32,7 @@ function CustomerSupport() {
               </div>
             </div>
             <div className="flex items-center justify-center gap-3">
-              <div className="flex items-center justify-center w-8 h-8 border border-white rounded-full cursor-pointer">
+              <div className="flex items-center justify-center w-8 h-8 border border-white rounded-full cursor-pointer hover:bg-white transition">
                 <IoCallOutline className="text-black text-lg font-extrabold" />
               </div>
               <div className="flex flex-col gap-0">

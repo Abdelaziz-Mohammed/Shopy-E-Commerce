@@ -23,6 +23,10 @@ h1, h2, h3, h4, h5, h6 {
     font-family: "Montserrat", serif;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 /* custom scroll bar */
 ::-webkit-scrollbar {
     width: 12px;

@@ -7,7 +7,10 @@ import BrowsedProducts from './searchRelatedSections/BrowsedProducts';
 import Offers from './Offers';
 import HomeAndKitchen from './categoriesSections/HomeAndKitchen';
 import Fashion from './categoriesSections/Fashion';
+import Beauty from './categoriesSections/Beauty';
+import Jewellery from './categoriesSections/Jewellery';
 import Electronics from './categoriesSections/Electronics';
+import Sports from './categoriesSections/Sports';
 import CustomerSupport from './CustomerSupport';
 
 function Home() {
@@ -24,7 +27,10 @@ function Home() {
       {/* Categories Sections */}
       <HomeAndKitchen />
       <Fashion />
+      <Beauty />
+      <Jewellery />
       <Electronics />
+      <Sports />
       {/* Custmor Support */}
       <CustomerSupport />
     </>

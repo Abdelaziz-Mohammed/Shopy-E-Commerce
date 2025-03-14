@@ -28,7 +28,9 @@ function TopNav() {
             </Link>
             <FaRegBell className='cursor-pointer' />
             <FaRegHeart className='cursor-pointer' />
-            <FiShoppingCart className='cursor-pointer' />
+            <Link to='/cart'>
+              <FiShoppingCart className='cursor-pointer' />
+            </Link>
           </div>
         </div>
       </div>

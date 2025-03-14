@@ -1,6 +1,7 @@
 
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { UsersContext } from '../../userscontext/UsersContext';
 import googleImg from '../../assets/images/google-logo.svg';
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 import { MdEmail } from 'react-icons/md';
@@ -8,6 +9,8 @@ import { FaUser } from 'react-icons/fa';
 
 function Signup() {
   const navigate = useNavigate();
+  // users context
+  const { users, addUser } = useContext(UsersContext);
   const [showPassword, setShowPassword] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -18,6 +21,7 @@ function Signup() {
   const [nameError, setNameError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const allowedDomains = ['gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com', 'icloud.com'];
   function validateInputs() {
     const isNameValid = name.length >= 3 && name.length <= 50 && (/^[A-Za-z\s]+$/).test(name.trim());
     const isEmailValid = email.length > 0 && email.length <= 100 && (/^\S+@\S+\.\S+$/g).test(email.trim());
@@ -39,6 +43,7 @@ function Signup() {
       setNameError('Valid Name');
     }
     // set email error messages
+    const emaildomail = email.split('@')[1];
     if (email.length === 0) {
       setEmailError('Email is required');
     }
@@ -47,6 +52,9 @@ function Signup() {
     }
     else if (!(/^\S+@\S+\.\S+$/g).test(email.trim())) {
       setEmailError('Invalid email format (example@gmail.com)');
+    }
+    else if (!allowedDomains.includes(emaildomail)) {
+      setEmailError(`Invalid domain name: ${emaildomail}`);
     }
     else {
       setEmailError('Valid Email');
@@ -78,7 +86,17 @@ function Signup() {
     setvalidEmail(isEmailValid);
     setvalidPassword(isPasswordValid);
     // navigate if every thing is OK
-    if (isNameValid && isEmailValid && isPasswordValid) navigate('/');
+    if (isNameValid && isEmailValid && isPasswordValid) {
+      // add new user to the users context
+      const user = {
+        id: users.length + 1,
+        name: name.trim(),
+        email: email.trim(),
+        password: password.trim(),
+      };
+      addUser(user);
+      navigate('/');
+    }
   }
   return (
     <section className="bg-white h-screen">

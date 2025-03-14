@@ -1,6 +1,5 @@
 
 import PropTypes from "prop-types"
-import { Link } from 'react-router-dom';
 import { useEffect, useRef, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -19,9 +18,9 @@ import catJewellery from '../../../assets/images/categories/cat-jewellery.png';
 import catElectronics from '../../../assets/images/categories/cat-electronics.png';
 import catSports from '../../../assets/images/categories/cat-sports.png';
 
-const Category = ({ image, text }) => {
+const Category = ({ image, text, navSection }) => {
   return (
-    <Link to='/'
+    <a href={`#${navSection}`}
       // navigate to each category from here
       className="flex flex-col gap-5 w-fit mt-1">
       <img src={image} alt="gift"
@@ -29,23 +28,24 @@ const Category = ({ image, text }) => {
       <h4 className="font-bold text-center text-sm lg:text-base">
         {text}
       </h4>
-    </Link>
+    </a>
   )
 }
 
 Category.propTypes = {
     image: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired
+    text: PropTypes.string.isRequired,
+    navSection: PropTypes.string.isRequired
 }
 
 function Categories() {
   const categories = [
-    { image: catHome, text: 'Home' },
-    { image: catFashion, text: 'Fashion' },
-    { image: catBeauty, text: 'Beauty' },
-    { image: catJewellery, text: 'Jewellery' },
-    { image: catElectronics, text: 'Electronics' },
-    { image: catSports, text: 'Sports' }
+    { image: catHome, text: 'Home', navSection: 'home-section' },
+    { image: catFashion, text: 'Fashion', navSection: 'fashion-section' },
+    { image: catBeauty, text: 'Beauty', navSection: 'beauty-section' },
+    { image: catJewellery, text: 'Jewellery', navSection: 'jewellery-section' },
+    { image: catElectronics, text: 'Electronics', navSection: 'electronics-section' },
+    { image: catSports, text: 'Sports', navSection: 'sports-section' }
   ];
   const swiperContainer = useRef(null);
   const [swiperContainerWidth, setSwiperContainerWidth] = useState(0);
@@ -79,7 +79,7 @@ function Categories() {
             {
               categories.map((category, index) => (
                 <SwiperSlide key={index}>
-                  <Category image={category.image} text={category.text} />
+                  <Category image={category.image} text={category.text} navSection={category.navSection} />
                 </SwiperSlide>
               ))
             }

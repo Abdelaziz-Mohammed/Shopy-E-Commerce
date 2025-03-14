@@ -2,10 +2,14 @@
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+// ---
 import ProductsProvider from './productscontext/ProductsProvider';
+import UsersProvider from './userscontext/UsersProvider.jsx';
+// ---
 import App from './App.jsx';
 import Home from './pages/home/Home';
 import ShoppingCart from './pages/shoppingcart/ShoppingCart';
+import CheckOut from './pages/checkout/CheckOut.jsx';
 
 import Signin from './pages/signin/Signin';
 import Signup from './pages/signup/Signup';
@@ -31,14 +35,23 @@ const router = createBrowserRouter([
         path: 'cart',
         element: <ShoppingCart />
       },
-      // 
+      {
+        path: 'checkout',
+        element: <CheckOut />
+      },
+      // -----
+      // -----
       {
         path: 'signin',
-        element: <Signin />
+        element: <UsersProvider>
+          <Signin />
+        </UsersProvider>
       },
       {
         path: 'signup',
-        element: <Signup />
+        element: <UsersProvider>
+        <Signup />
+      </UsersProvider>
       },
       {
         path: 'passwordreset',
