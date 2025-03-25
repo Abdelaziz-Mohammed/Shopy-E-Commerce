@@ -9,6 +9,11 @@
         font-family: 'Poppins', serif;
         font-size: clamp(1.2rem, 5vw, 1.875rem);
     }
+    .account-subpage-title {
+        @apply font-bold text-start text-black capitalize;
+        font-family: 'Poppins', serif;
+        font-size: clamp(1rem, 5vw, 1.5rem);
+    }
 }
 
 /* ----- */

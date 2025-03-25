@@ -114,6 +114,9 @@ function CheckOut() {
     { image: amazonPayImg, label: 'Amazon Pay' },
     { image: creditCardImg, label: 'Debid/Credit Card' }
   ];
+
+  // selected payment method
+  const [selectedPayment, setSelectedPayment] = useState(0);
   return (
     <section className="bg-white">
       <div className="container mx-auto px-6 pt-[100px] pb-16">
@@ -265,7 +268,7 @@ function CheckOut() {
                         Ship into different address
                     </label>
                   </div>
-                  </form>
+                </form>
               </div>
               {/* order summary */}
               <div className="flex flex-col gap-5 lg:w-1/3">
@@ -324,7 +327,7 @@ function CheckOut() {
               <h3 className='font-semibold text-base px-3 py-5'>
                 Payment Option
               </h3>
-              <div className='flex flex-wrap gap-x-0 gap-y-10 items-center justify-center px-3 py-8 border border-neutral-300 border-l-0 border-r-0'>
+              <div className={`flex flex-wrap gap-x-0 gap-y-10 items-center justify-center px-3 py-8 border border-neutral-300 border-l-0 border-r-0 ${selectedPayment === 0 ? 'border-b-0' : ''}`}>
                 {
                   paymentMethods.map((payment, index) => 
                     <div key={index}
@@ -334,6 +337,7 @@ function CheckOut() {
                         <img src={payment.image} alt={payment.label} />
                         <span className='text-sm font-medium'>{payment.label}</span>
                         <input type="radio" name="paymentMethod" id={`payment-method-${index+1}`}
+                          checked={selectedPayment === index} onChange={() => setSelectedPayment(index)}
                           className='hidden peer'/>
                         {/* custom radio circle */}
                         <div className='w-5 h-5 flex items-center justify-center border-2 border-gray-400 rounded-full cursor-pointer 
@@ -345,44 +349,48 @@ function CheckOut() {
                   )
                 }
               </div>
-              <form className='flex flex-wrap gap-5 px-6 py-8'>
-                {/* name on card */}
-                <div className='flex flex-col gap-1 w-full'>
-                  <label htmlFor="name-on-card" className='text-sm font-normal'>
-                    Name On Card
-                  </label>
-                  <input type="text" name="nameOnCard" id="name-on-card"
-                    className='h-10 border border-neutral-300 focus:border-yellowPrimary ease-linear duration-150
-                    rounded outline-none ps-3' />
-                </div>
-                {/* card number */}
-                <div className='flex flex-col gap-1 w-full'>
-                  <label htmlFor="card-number" className='text-sm font-normal'>
-                    Card Number
-                  </label>
-                  <input type="text" name="cardNumber" id="card-number"
-                    className='h-10 border border-neutral-300 focus:border-yellowPrimary ease-linear duration-150
-                    rounded outline-none ps-3' />
-                </div>
-                {/* expire date */}
-                <div className='flex flex-col gap-1 w-full sm:w-[calc(50%-10px)]'>
-                  <label htmlFor="expire-date" className='text-sm font-normal'>
-                    Expire Date
-                  </label>
-                  <input type="text" name="cardNumber" id="expire-date" placeholder='DD/YY'
-                    className='h-10 border border-neutral-300 focus:border-yellowPrimary ease-linear duration-150
-                    rounded outline-none ps-3' />
-                </div>
-                {/* CVC */}
-                <div className='flex flex-col gap-1 w-full sm:w-[calc(50%-10px)]'>
-                  <label htmlFor="cvc" className='text-sm font-normal'>
-                    CVC
-                  </label>
-                  <input type="text" name="CVC" id="cvc"
-                    className='h-10 border border-neutral-300 focus:border-yellowPrimary ease-linear duration-150
-                    rounded outline-none ps-3' />
-                </div>
-              </form>
+              {
+                (selectedPayment !== 0)
+                &&
+                <form className='flex flex-wrap gap-5 px-6 py-8'>
+                  {/* name on card */}
+                  <div className='flex flex-col gap-1 w-full'>
+                    <label htmlFor="name-on-card" className='text-sm font-normal'>
+                      Name On Card
+                    </label>
+                    <input type="text" name="nameOnCard" id="name-on-card"
+                      className='h-10 border border-neutral-300 focus:border-yellowPrimary ease-linear duration-150
+                      rounded outline-none ps-3' />
+                  </div>
+                  {/* card number */}
+                  <div className='flex flex-col gap-1 w-full'>
+                    <label htmlFor="card-number" className='text-sm font-normal'>
+                      Card Number
+                    </label>
+                    <input type="text" name="cardNumber" id="card-number"
+                      className='h-10 border border-neutral-300 focus:border-yellowPrimary ease-linear duration-150
+                      rounded outline-none ps-3' />
+                  </div>
+                  {/* expire date */}
+                  <div className='flex flex-col gap-1 w-full sm:w-[calc(50%-10px)]'>
+                    <label htmlFor="expire-date" className='text-sm font-normal'>
+                      Expire Date
+                    </label>
+                    <input type="text" name="cardNumber" id="expire-date" placeholder='DD/YY'
+                      className='h-10 border border-neutral-300 focus:border-yellowPrimary ease-linear duration-150
+                      rounded outline-none ps-3' />
+                  </div>
+                  {/* CVC */}
+                  <div className='flex flex-col gap-1 w-full sm:w-[calc(50%-10px)]'>
+                    <label htmlFor="cvc" className='text-sm font-normal'>
+                      CVC
+                    </label>
+                    <input type="text" name="CVC" id="cvc"
+                      className='h-10 border border-neutral-300 focus:border-yellowPrimary ease-linear duration-150
+                      rounded outline-none ps-3' />
+                  </div>
+                </form>
+              }
             </div>
             {/* additional information */}
             <div className='flex flex-col gap-3 lg:max-w-[calc(66.67%-40px)]'>

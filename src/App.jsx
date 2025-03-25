@@ -1,4 +1,3 @@
-
 import { Outlet, useLocation } from "react-router-dom"
 import Navbar from './components/navbar/Navbar';
 import Footer from './components/footer/Footer';
@@ -6,8 +5,8 @@ import ScrollToTop from './components/scrolltotop/ScrollToTop';
 
 function App() {
   const { pathname } = useLocation();
-  const hideNavbarRoutes = ['/signin', '/signup', '/passwordreset', '/checkemail', '/setnewpassword', '/resetsuccessfully'];
-  const hideFooterRoutes = ['/signin', '/signup', '/passwordreset', '/checkemail', '/setnewpassword', '/resetsuccessfully'];
+  const hideNavbarRoutes = ['/signin', '/signup', '/passwordreset', '/checkemail', '/setnewpassword', '/resetsuccessfully', '/test'];
+  const hideFooterRoutes = ['/signin', '/signup', '/passwordreset', '/checkemail', '/setnewpassword', '/resetsuccessfully', '/test'];
   return (
     <>
       {

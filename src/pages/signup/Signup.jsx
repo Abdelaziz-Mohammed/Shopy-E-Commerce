@@ -1,115 +1,195 @@
-
-import { useContext, useState } from 'react';
+import supabase from '../../supabaseclient';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { UsersContext } from '../../userscontext/UsersContext';
+// react-select for drop-downs
+import Select from 'react-select';
+// images
 import googleImg from '../../assets/images/google-logo.svg';
-import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
-import { MdEmail } from 'react-icons/md';
+// react icons
 import { FaUser } from 'react-icons/fa';
+import { MdEmail } from 'react-icons/md';
+import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 
 function Signup() {
   const navigate = useNavigate();
-  // users context
-  const { users, addUser } = useContext(UsersContext);
+  // password Show/Hide Toggler
   const [showPassword, setShowPassword] = useState(false);
+  // input fields' values
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [validName, setvalidName] = useState(true);
-  const [validEmail, setvalidEmail] = useState(true);
-  const [validPassword, setvalidPassword] = useState(true);
+  const [selectedUserType, setSelectedUserType] = useState('Client');
+  // bool -> validate
+  const [validName, setValidName] = useState(true);
+  const [validEmail, setValidEmail] = useState(true);
+  const [validPassword, setValidPassword] = useState(true);
+  // error messages
   const [nameError, setNameError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [signupError, setSignupError] = useState('');
+  // allowed e-mails
   const allowedDomains = ['gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com', 'icloud.com'];
-  function validateInputs() {
-    const isNameValid = name.length >= 3 && name.length <= 50 && (/^[A-Za-z\s]+$/).test(name.trim());
-    const isEmailValid = email.length > 0 && email.length <= 100 && (/^\S+@\S+\.\S+$/g).test(email.trim());
-    const isPasswordValid = password.length >= 8 && (/[A-Z]/).test(password) && (/[a-z]/).test(password) && (/\d/).test(password) && (/[@$!%*?&]/).test(password);
+  // user types (role)
+  const userTypes = ['Client', 'Seller', 'Transporter'];
+  const userTypesOptions = userTypes.map(
+    userType => ({
+      value: userType,
+      label: userType
+    })
+  );
+
+  // validation and add new use to db
+  async function handleSignup() {
+    setLoading(true);
+    setSignupError('');
+
+    // set local validators
+    const isNameValid = name.length >= 3 && name.length <= 50 && /^[A-Za-z\s]+$/.test(name.trim());
+    const isEmailValid = email.length > 0 && email.length <= 100 && (/^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/).test(email.trim());
+    const isPasswordValid =
+      password.length >= 8 &&
+      (/[A-Z]/).test(password) &&
+      (/[a-z]/).test(password) &&
+      (/\d/).test(password) &&
+      (/[@$!%*?&]/).test(password);
+    
     // set name error messages
-    if (name.length === 0) {
-      setNameError('Name is required');
-    }
-    else if (name.length < 3) {
-      setNameError('Name must be at least 3 characters long');
-    }
-    else if (name.length > 50) {
-      setNameError('Name must not exceed 50 characters');
-    }
-    else if (!(/^[A-Za-z\s]+$/).test(name.trim())) {
-      setNameError('Name should contain only letters and spaces');
+    if (!isNameValid) {
+      setNameError(
+        name.length === 0 ? 'Name is required' :
+        name.length < 3 ? 'Name must be at least 3 characters long' :
+        name.length > 50 ? 'Name must not exceed 50 characters' :
+        'Name should contain only letters and spaces'
+      );
     }
     else {
       setNameError('Valid Name');
     }
+    
     // set email error messages
-    const emaildomail = email.split('@')[1];
-    if (email.length === 0) {
-      setEmailError('Email is required');
-    }
-    else if (email.length > 100) {
-      setEmailError('Email must not exceed 100 characters');
-    }
-    else if (!(/^\S+@\S+\.\S+$/g).test(email.trim())) {
-      setEmailError('Invalid email format (example@gmail.com)');
-    }
-    else if (!allowedDomains.includes(emaildomail)) {
-      setEmailError(`Invalid domain name: ${emaildomail}`);
+    const emailDomain = email.includes('@') ? email.split('@')[1] : '';
+    if (!isEmailValid || !allowedDomains.includes(emailDomain)) {
+      setEmailError(
+        email.length === 0 ? 'Email is required' :
+        email.length > 100 ? 'Email must not exceed 100 characters' :
+        !(/^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/).test(email.trim()) ? 'Invalid email format (example@gmail.com)' :
+        !allowedDomains.includes(emailDomain) ? `Invalid domain name: ${emailDomain}` : ''
+      );
     }
     else {
       setEmailError('Valid Email');
     }
+    
     // set password error messages
-    if (password.length === 0) {
-      setPasswordError('Password is required');
-    }
-    else if (password.length < 8) {
-      setPasswordError('Password must be at least 8 characters long');
-    }
-    else if (!(/[A-Z]/).test(password)) {
-      setPasswordError('Password must include at least one uppercase letter');
-    }
-    else if (!(/[a-z]/).test(password)) {
-      setPasswordError('Password must include at least one lowercase letter');
-    }
-    else if (!(/\d/).test(password)) {
-      setPasswordError('Password must include at least one number');
-    }
-    else if (!(/[@$!%*?&]/).test(password)) {
-      setPasswordError('Password must include at least one special character (@$!%*?&)');
+    if (!isPasswordValid) {
+      setPasswordError(
+        password.length === 0 ? 'PAssword is required' :
+        password.length < 8 ? 'Password must be at least 8 characters long' :
+        !(/[A-Z]/).test(password) ? 'Password must include at least one uppercase letter' :
+        !(/[a-z]/).test(password) ? 'Password must include at least one lowercase letter' :
+        !(/\d/).test(password) ? 'Password must include at least one number' :
+        !(/[@$!%*?&]/).test(password) ? 'Password must include at least one special character (@$!%*?&)' : ''
+      );
     }
     else {
       setPasswordError('Valid Password');
     }
+    
     // set valid booleans
-    setvalidName(isNameValid);
-    setvalidEmail(isEmailValid);
-    setvalidPassword(isPasswordValid);
-    // navigate if every thing is OK
-    if (isNameValid && isEmailValid && isPasswordValid) {
-      // add new user to the users context
-      const user = {
-        id: users.length + 1,
-        name: name.trim(),
-        email: email.trim(),
-        password: password.trim(),
-      };
-      addUser(user);
-      navigate('/');
+    setValidName(isNameValid);
+    setValidEmail(isEmailValid);
+    setValidPassword(isPasswordValid);
+
+    // Prevent signup if invalid
+    if (!isNameValid || !isEmailValid || !isPasswordValid) {
+      setLoading(false);
+      return;
+    }
+
+    // send user data if everything is OK
+    try {
+      // Sign up the user using Supabase Auth
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email,
+        password
+      });
+  
+      if (authError) throw authError;
+      if (!authData || !authData.user) throw new Error('User signup failed');
+
+      // Set user data in local storage
+      // localStorage.setItem('user', JSON.stringify(authData.user));
+      
+      const { error: dbError } = await supabase.from('users').insert([
+        {
+          id: authData.user.id, // Store Supabase user ID
+          name,
+          email,
+          role: selectedUserType === 'Client' ? 1 : selectedUserType === 'Seller' ? 2 : 3
+        }
+      ]);
+
+      if (dbError) throw dbError;
+    }
+    catch(error) {
+        console.error('SignUp Error:', error.message);
+        setSignupError(
+          error.message === 'duplicate key value violates unique constraint "users_id_key"' ? 'This user already exists' :
+          error.message === 'Invalid email or password' ? 'Invalid email or password' : error.message
+        );
+    }
+    finally {
+        setLoading(false);
     }
   }
+  
+  // handle continue with google
+  async function handleGoogleSignIn() {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+    });
+  
+    if (error) {
+      console.error('Google Sign-In Error:', error.message);
+      return;
+    }
+
+    if (data?.user) {
+      const { id, email, user_metadata } = data.user;
+
+      // isert user into users table in db if they are new
+      const { error: dbError } = await supabase.from('users').upsert([
+        {
+          id,
+          email,
+          name: user_metadata?.full_name || '', // get name from google
+          role: 1, // default role 'Client'
+        }
+      ]);
+
+      if (dbError) {
+        console.error('Database Insert Error:', dbError.message);
+      }
+    }
+  };
   return (
     <section className="bg-white h-screen">
       <div className="container mx-auto px-6 h-full flex items-center justify-center">
         <div className='flex flex-col gap-5 border border-neutral-300 rounded-lg px-5 py-12 w-full max-w-[480px] shadow-lg'>
+          {/* heading */}
           <p className='text-black text-base font-medium'>Start your journey</p>
           <h3 className="text-black font-bold text-2xl sm:text-3xl">Sign up to Shopy</h3>
-          <div className='flex items-center justify-center gap-3 border border-neutral-300 rounded-lg h-[40px] cursor-pointer 
+          {/* continue with google */}
+          <button onClick={handleGoogleSignIn}
+            className='flex items-center justify-center gap-3 border border-neutral-300 rounded-lg h-[40px] cursor-pointer 
             hover:border-neutral-500 hover:bg-neutral-50 ease-linear duration-200'>
             <img src={googleImg} alt="Google"
               className='w-6 h-6'/>
             <span className='font-medium text-black'>Continue with google</span>
-          </div>
+          </button>
+          {/* --or-- */}
           <div className='w-full h-[1px] bg-neutral-500 relative my-5'>
             <span className='text-neutral-500 text-center font-semibold uppercase font-base px-1 bg-white 
               absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]'>OR</span>
@@ -133,6 +213,34 @@ function Signup() {
             <span className={`${nameError === '' ? 'hidden' : ''} text-xs pl-3 ${nameError === 'Valid Name' ? 'text-green-500' : 'text-red-500'}`}>
               {nameError}
             </span>
+          </div>
+          {/* user type field */}
+          <div className='flex flex-col gap-1'>
+            <Select
+              options={userTypesOptions}                      
+              value={{value: selectedUserType, label: selectedUserType}}
+              onChange={(selected) => setSelectedUserType(selected.value)}
+              styles={{
+                option: (provided, state) => ({
+                  ...provided,
+                  // Add bottom border color only for hovered item
+                  backgroundColor: state.isFocused ? '#f5f5f5' : 'white',
+                  color: state.isFocused ? "#C59B2D" : "black",
+                  padding: 10,
+                }),
+                control: (provided, state) => ({
+                  ...provided,
+                  borderColor: state.isFocused ? '#737373' : '#e5e5e5',
+                  "&:hover": { borderColor: '#737373' },
+                  boxShadow: 'none'
+                }),
+                menuList: (provided) => ({
+                  ...provided,
+                  maxHeight: '180px',
+                  overflowY: 'auto'
+                })
+              }}
+            />
           </div>
           {/* email field */}
           <div>
@@ -179,10 +287,18 @@ function Signup() {
               {passwordError}
             </span>
           </div>
-          <button onClick={validateInputs}
+          {/* signup error message */}
+          <div className='text-red-500 text-sm pl-3 pt-2'>
+            {signupError}
+          </div>
+          {/* signup button */}
+          <button
+            onClick={handleSignup}
+            disabled={loading}
             className='text-white bg-black w-full rounded-md h-[40px] flex items-center justify-center'>
-            Sign Up
+            {loading ? 'Signing up...' : 'Sign Up'}
           </button>
+          {/* do not have an account */}
           <div className='text-center flex items-center justify-center gap-1'>
             <p
               className='text-sm font-medium text-black'>Have an account ?</p>

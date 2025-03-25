@@ -1,6 +1,6 @@
 
 import { FaRegHeart, FaShoppingCart, FaStar } from "react-icons/fa"
-import productImg from '../../assets/images/products/product-img-1.png';
+import productImg from '../../assets/images/products/test-product-img.png';
 
 function ProductCard() {
   return (

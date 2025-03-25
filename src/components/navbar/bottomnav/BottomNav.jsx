@@ -11,7 +11,8 @@ function BottomNav() {
             links.map((link, index) =>
               <li key={index}>
                 <Link to='/'
-                  className="text-sm md:text-base text-black font-medium">
+                  className="text-sm md:text-base text-black font-medium hover:text-yellowPrimary 
+                    pb-1 border-b-0 hover:border-b border-b-yellowPrimary transition-all duration-150">
                   {link}
                 </Link>
               </li>
