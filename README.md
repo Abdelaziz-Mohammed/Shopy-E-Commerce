@@ -1,3 +1,6 @@
+# ONGOING 🐱‍🏍😎😍
+
+
 # Shopy E-Commerce App
 
 ## 📌 Project Overview
